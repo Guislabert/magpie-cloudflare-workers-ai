@@ -17,5 +17,7 @@ jobs:
         run: |
           node --check index.mjs
           node --check src/index.mjs
+      - name: Version consistency
+        run: node .github/scripts/version-check.mjs
       - name: Tests
         run: node --test

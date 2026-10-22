@@ -26,11 +26,12 @@
     "src/",
     "README.md",
     "README.zh-CN.md",
+    "README.ja.md",
     "LICENSE"
   ],
   "scripts": {
     "test": "node --test",
-    "check": "node --check index.mjs && node --test"
+    "check": "node --check index.mjs && node .github/scripts/version-check.mjs && node --test"
   },
   "engines": {
     "node": ">=20"
