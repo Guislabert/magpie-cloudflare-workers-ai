@@ -10,19 +10,15 @@ on:
     paths:
       - "package.json"
       - "CHANGELOG.md"
-      - "README*.md"
-      - ".github/workflows/version.yml"
   pull_request:
     paths:
       - "package.json"
       - "CHANGELOG.md"
-      - "README*.md"
-      - ".github/workflows/version.yml"
 
 jobs:
   consistency:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: package.json ↔ CHANGELOG ↔ badges
+      - name: package.json ↔ CHANGELOG
         run: node .github/scripts/version-check.mjs
