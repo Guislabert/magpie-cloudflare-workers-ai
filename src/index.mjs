@@ -7,6 +7,20 @@ const MODELS_DEV_URL = "https://models.dev/api.json";
 const CF_API_BASE_TEMPLATE = "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/v1";
 const DEFAULT_DISCOVERY_TTL_MS = 60 * 60 * 1000; // 1 hour
 const CHAT_SDK = "@ai-sdk/openai-compatible";
+// Models Cloudflare gates behind a Workers Paid plan / prepaid AI Gateway credits
+// (developers.cloudflare.com/workers-ai/platform/pricing/)
+const PAID_ONLY_MODELS = new Set([
+  "@cf/moonshotai/kimi-k2.6",
+  "@cf/moonshotai/kimi-k2.7-code",
+  "@cf/zai-org/glm-5.2",
+  "@cf/zai-org/glm-5.3",
+  "@cf/zai-org/glm-5.3-flash",
+  "@cf/deepseek-ai/deepseek-v4-flash-0731",
+  "@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+  "@cf/deepseek-ai/deepseek-v4-pro-0813",
+]);
+const FREE_ALLOCATION_NEURONS = 10000; // per day, both plans
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 function checkedURL(value) {
   const url = new URL(value);
@@ -173,7 +187,8 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
         api: baseURL,
         models: Object.fromEntries(
           Object.entries(models).map(([id, m]) => [id, {
-            name: m.name,
+            name: PAID_ONLY_MODELS.has(id) ? `${m.name} （Paid）` : m.name,
+            meta: PAID_ONLY_MODELS.has(id) ? "需要 Workers Paid 或 AI Gateway 预充值" : undefined,
             limit: m.limit,
             reasoning: m.capabilities.reasoning,
             tool_call: m.capabilities.toolcall,
@@ -310,17 +325,57 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
           },
         };
       },
-      async usage(_getAuth, _provider) {
-        // Contract: auth.usage(getAuth, provider). Cloudflare Workers AI has no
-        // per-token allowance endpoint to poll; report an empty usage window.
-        return { plan: "Cloudflare Workers AI", windows: [] };
+      async usage(getAuth, _provider) {
+        // Cloudflare publishes no REST for per-account Neurons (dashboard only);
+        // show the repeatable free-allocation window (10,000 Neurons/day,
+        // resets daily 00:00 UTC) and best-effort plan detection.
+        const auth = await getAuth?.();
+        const acct = auth?.metadata?.accountId || accountId;
+        let plan = "Workers Free / Paid（需 Dashboard 确认）";
+        try {
+          const res = await fetchImpl(`https://api.cloudflare.com/client/v4/accounts/${acct}`, {
+            headers: { authorization: `Bearer ${auth?.key ?? apiKey}` },
+            redirect: "error",
+            signal: AbortSignal.timeout(15_000),
+          });
+          if (res.ok) {
+            const info = await res.json();
+            const planName = info?.result?.plan?.name ?? info?.result?.plan ?? "";
+            if (/free/i.test(String(planName))) plan = "Workers Free";
+            else if (String(planName)) plan = String(planName);
+          }
+        } catch {
+          /* token scope not enough or network issue — keep unknown */
+        }
+        const nextUtcMidnight = new Date(Math.floor(Date.now() / DAY_MS) * DAY_MS + DAY_MS);
+        return {
+          plan,
+          windows: [
+            {
+              name: "Neurons/天（免费额度）",
+              span: DAY_MS,
+              resetsAt: nextUtcMidnight.toISOString(),
+              amount: null,
+              limit: FREE_ALLOCATION_NEURONS,
+              unit: "neurons",
+              display: "≤10,000 Neurons/天：精确用量仅在 Cloudflare Dashboard（API 无公开端点）",
+            },
+          ],
+        };
       },
     },
     provider: {
       id: CF_WORKERS_AI_ID,
       async models(provider, { auth } = {}) {
         if (!auth) return provider.models;
-        return (await discovery.forDisplay());
+        const models = await discovery.forDisplay();
+        // Flag Models-limited behind Workers Paid / AI Gateway credits
+        return Object.fromEntries(
+          Object.entries(models).map(([id, m]) => [
+            id,
+            PAID_ONLY_MODELS.has(id) ? { ...m, name: `${m.name} （Paid）` } : m,
+          ]),
+        );
       },
     },
   };

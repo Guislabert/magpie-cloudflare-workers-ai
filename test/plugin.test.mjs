@@ -174,6 +174,46 @@ test("authorize accepts bare-string and fields-object token shapes", async () =>
   assert.equal(noTok.type, "failed");
 });
 
+test("usage reports free-allocation window with next UTC midnight reset", async () => {
+  const o = opts();
+  o.fetchImpl = async (url, init) => {
+    if (typeof url === "string" && url.includes("models.dev")) {
+      return new Response(JSON.stringify(fakeCatalog()));
+    }
+    return new Response("{}", { status: 200 });
+  };
+  const plugin = await CloudflareWorkersAIPlugin({}, o);
+  const u = await plugin.auth.usage(async () => ({
+    key: "tok",
+    metadata: { accountId: ACCOUNT_ID },
+  }));
+  assert.ok(u.plan, "plan name present");
+  assert.equal(u.windows.length, 1);
+  const w = u.windows[0];
+  assert.equal(w.limit, 10000);
+  assert.equal(w.unit, "neurons");
+  assert.equal(new Date(w.resetsAt).getUTCHours(), 0);
+  assert.equal(new Date(w.resetsAt).getUTCMinutes(), 0);
+  assert.equal(w.span, 86400_000);
+});
+
+test("paid-only models are flagged (Paid) in config and provider.models", async () => {
+  const catalog = fakeCatalog();
+  catalog["cloudflare-workers-ai"].models["@cf/zai-org/glm-5.3"] = {
+    name: "GLM 5.3",
+    limit: { context: 128000, output: 32000 },
+    modalities: { input: ["text"], output: ["text"] },
+  };
+  const o = opts(catalog);
+  const plugin = await CloudflareWorkersAIPlugin({}, o);
+  const cfg = {};
+  await plugin.config(cfg);
+  assert.match(cfg.provider["cloudflare-workers-ai"].models["@cf/zai-org/glm-5.3"].name, /Paid/, "config decoration");
+  assert.equal(cfg.provider["cloudflare-workers-ai"].meta, undefined);
+  const pm = cfg.provider["cloudflare-workers-ai"].models["@cf/meta/llama-3-8b-instruct"];
+  assert.doesNotMatch(pm.name, /Paid/, "free model not flagged");
+});
+
 test("fetch normalizes template-account URLs onto the effective account base", async () => {
   let forwarded = "";
   const o = opts();
