@@ -1,5 +1,6 @@
 # magpie-cloudflare-workers-ai
 
+[![CI](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/magpie-cloudflare-workers-ai.svg)](https://www.npmjs.com/package/magpie-cloudflare-workers-ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -32,7 +33,7 @@ Cloudflare Workers AI provider plugin for [Magpie](https://github.com/magpie-ai/
 
 3. In Magpie UI → Providers → **Cloudflare Workers AI** → Sign in with:
    - **API Token** (Cloudflare API Token with `Workers AI:Edit` permission)
-   - **Account ID** (optional, 32-char hex; overrides plugin default)
+   - **Account ID** — asked through the sign-in prompt (masked field, optional 32-char hex; overrides the plugin default)
 
 ### Via npm (for local development)
 
@@ -72,8 +73,19 @@ In `plugins.json` with options:
 1. **On startup**: Fetches `https://models.dev/api.json` → extracts `cloudflare-workers-ai.models`
 2. **Builds model metadata**: Maps capabilities, limits, pricing, reasoning variants
 3. **Registers provider**: Adds `cloudflare-workers-ai` to Magpie's provider registry
-4. **Auth flow**: User provides API Token (+ optional Account ID override)
-5. **Request routing**: Intercepts `/chat/completions`, verifies model exists, forwards to Cloudflare with Bearer auth
+4. **Auth flow**: One `api` sign-in method; the optional Account ID is a `password`-type prompt (`auth.methods[0].prompts`), saved as `auth.metadata.accountId`
+5. **Request routing**: The loader's `fetch` is a generic pass-through to the Workers AI base URL (path and method preserved), with `Bearer` auth; for JSON bodies naming a model, the model is verified against the live catalog
+
+## Plugin contract
+
+This plugin follows the magpie-community plugin contract ([reference](https://usemagpie.ai/docs/plugins)):
+
+- Single async plugin function exporting `config`, `auth.methods`, `auth.loader`, `auth.usage` and `provider.models` hooks
+- `loader(getAuth, provider)` reads the contract account shape (`auth.key`, `auth.metadata.accountId`); the legacy OpenCode multi-method shape is accepted as a fallback
+- `authorize(input, inputs)` returns `{ type: "success", key, metadata: { accountId? } }` or `{ type: "failed", error }`
+- `usage(getAuth, provider)` reports an empty window (Workers AI has no per-token allowance endpoint to poll)
+- On catalog fetch failure at load, `config()` degrades to an empty model list instead of throwing; per-account `provider.models` serves the cached catalog afterward
+- One file, zero runtime dependencies, ESM (`node >= 20`)
 
 ## Supported Models
 
