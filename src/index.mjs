@@ -255,8 +255,19 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
           async fetch(input, init) {
             const req = new Request(input, init);
             const parsed = new URL(req.url);
-            const path = parsed.pathname.replace(/^\/+/, "");
-            const targetURL = `${effectiveBaseURL}/${path}`;
+            // The gateway may address us via a model-metadata URL that still
+            // carries the ${CLOUDFLARE_ACCOUNT_ID} template. Rebuild the target
+            // from the effective account's base URL, reusing only the resource
+            // part after /accounts/<whatever>/ai/v1.
+            let targetURL;
+            const m = parsed.pathname.match(/\/accounts\/[^/]*\/ai\/v1(\/.*)?$/);
+            if (m) {
+              const suffix = m[1] && m[1] !== "/" ? m[1] : "";
+              targetURL = effectiveBaseURL.replace(/\/+$/, "") + suffix;
+            } else {
+              targetURL = effectiveBaseURL.replace(/\/+$/, "") + "/" + parsed.pathname.replace(/^\/+/, "");
+            }
+            if (parsed.search) targetURL += parsed.search;
 
             const headers = new Headers({ authorization: `Bearer ${apiKey}` });
             // Pass through CF-specific headers and content-type as given

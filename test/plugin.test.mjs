@@ -173,3 +173,33 @@ test("authorize accepts bare-string and fields-object token shapes", async () =>
   const noTok = await method.authorize({}, { accountId: "b".repeat(32) });
   assert.equal(noTok.type, "failed");
 });
+
+test("fetch normalizes template-account URLs onto the effective account base", async () => {
+  let forwarded = "";
+  const o = opts();
+  o.fetchImpl = async (url) => {
+    if (typeof url === "string" && url.includes("models.dev")) {
+      return new Response(JSON.stringify(fakeCatalog()));
+    }
+    forwarded = url;
+    return new Response("{}", { status: 200 });
+  };
+  const plugin = await CloudflareWorkersAIPlugin({}, o);
+  const r = await plugin.auth.loader(async () => ({
+    key: "tok",
+    metadata: { accountId: ACCOUNT_ID },
+  }));
+  // gateway addressed us via model metadata URL that still holds the template
+  const req = new Request(
+    "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/v1/chat/completions",
+    { method: "POST", body: JSON.stringify({ model: "@cf/meta/llama-3-8b-instruct", messages: [] }) }
+  );
+  await r.fetch(req, {});
+  assert.equal(
+    forwarded,
+    `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1/chat/completions`
+  );
+  // concrete (non-template) incoming URL must keep its resource suffix too
+  await r.fetch(`${r.baseURL}/embeddings`, { method: "POST", body: "{}" });
+  assert.match(forwarded, /\/embeddings$/);
+});
