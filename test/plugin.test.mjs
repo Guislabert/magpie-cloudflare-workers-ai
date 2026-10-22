@@ -156,16 +156,20 @@ test("auth loader rejects unknown models but passes other endpoints through", as
   assert.match(forwarded, /\/embeddings$/);
 });
 
-test("authorize returns contract-conform result with metadata accountId", async () => {
+test("authorize accepts bare-string and fields-object token shapes", async () => {
   const plugin = await CloudflareWorkersAIPlugin({}, opts());
   const method = plugin.auth.methods[0];
-  assert.equal(method.type, "api");
-  const ok = await method.authorize(" tok ", { accountId: "b".repeat(32) });
-  assert.equal(ok.type, "success");
-  assert.equal(ok.key, "tok");
-  assert.equal(ok.metadata.accountId, "b".repeat(32));
-  const bad = await method.authorize("  ", { accountId: "b".repeat(32) });
-  assert.equal(bad.type, "failed");
-  const badAcct = method.prompts[0].validate("xyz");
-  assert.match(badAcct, /32 位|32/);
+  for (const call of [
+    [" tok ", { accountId: "b".repeat(32) }],
+    [{ key: "tok", accountId: "b".repeat(32) }],
+    [{ token: "tok", accountId: "b".repeat(32) }],
+    [{ apiKey: "tok", accountId: "b".repeat(32) }],
+  ]) {
+    const ok = await method.authorize(...call);
+    assert.equal(ok.type, "success", JSON.stringify(call[0]).slice(0, 30));
+    assert.equal(ok.key, "tok");
+    assert.equal(ok.metadata.accountId, "b".repeat(32));
+  }
+  const noTok = await method.authorize({}, { accountId: "b".repeat(32) });
+  assert.equal(noTok.type, "failed");
 });

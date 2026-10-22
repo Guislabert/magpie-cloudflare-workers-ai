@@ -207,9 +207,20 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
             },
           ],
           async authorize(input, inputs) {
-            const token = typeof input === "string" ? input.trim() : "";
+            // magpie may pass the token as a bare string (first arg) or as a
+            // fields object ({ key?, token?, apiKey?, accountId? }); accept both.
+            const obj =
+              input && typeof input === "object" && !Array.isArray(input)
+                ? input
+                : inputs && typeof inputs === "object"
+                  ? inputs
+                  : {};
+            const token = (
+              (typeof input === "string" && input.trim()) ||
+              obj.key || obj.token || obj.apiKey || obj["API Token"] || ""
+            ).trim();
             if (!token) return { type: "failed", error: "需要 API Token" };
-            const accountIdInput = (inputs?.accountId ?? "").trim();
+            const accountIdInput = (obj.accountId ?? inputs?.accountId ?? "").trim();
             return {
               type: "success",
               key: token,
