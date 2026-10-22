@@ -140,7 +140,7 @@ sh scripts/sandbox.sh json       # サンドボックス内で plugin --json
 
 | | |
 |---|---|
-| **バージョン** | [`0.1.2`](CHANGELOG.md) |
+| **バージョン** | [`0.0.1`](CHANGELOG.md) |
 | **ライセンス** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
 | **ランタイム** | Node.js >= 20、ESM のみ |
 | **作者** | [@Guislabert](https://github.com/Guislabert) |

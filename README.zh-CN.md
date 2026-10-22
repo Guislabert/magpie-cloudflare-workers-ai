@@ -145,7 +145,7 @@ magpie, agents and sign-ins are never touched.
 
 | | |
 |---|---|
-| **Version** | [`0.1.2`](CHANGELOG.md) |
+| **Version** | [`0.0.1`](CHANGELOG.md) |
 | **License** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
 | **Runtime** | Node.js >= 20, ESM only |
 | **Author** | [@Guislabert](https://github.com/Guislabert) |
