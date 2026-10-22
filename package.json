@@ -1,0 +1,23 @@
+{
+  "name": "magpie-cloudflare-workers-ai",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "main": "./index.mjs",
+  "description": "Cloudflare Workers AI provider plugin for Magpie with template URL and auto model discovery from models.dev",
+  "keywords": ["magpie", "cloudflare", "workers-ai", "provider", "template"],
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/Grepoch/magpie-cloudflare-workers-ai.git" },
+  "homepage": "https://github.com/Grepoch/magpie-cloudflare-workers-ai#readme",
+  "bugs": "https://github.com/Grepoch/magpie-cloudflare-workers-ai/issues",
+  "files": ["index.mjs", "src/", "README.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check index.mjs && node --test"
+  },
+  "engines": { "node": ">=20" },
+  "magpie": {
+    "maxConcurrency": 3,
+    "icon": "https://avatars.githubusercontent.com/u/1104806?v=4"
+  }
+}
