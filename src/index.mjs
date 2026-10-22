@@ -185,7 +185,6 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
     },
     auth: {
       provider: CF_WORKERS_AI_ID,
-      icon: "https://avatars.githubusercontent.com/u/1104806?v=4",
       maxConcurrency: 3,
       methods: [
         {

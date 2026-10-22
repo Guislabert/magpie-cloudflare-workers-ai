@@ -89,7 +89,7 @@ Automatically includes all models from Cloudflare Workers AI catalog, e.g.:
 
 ```bash
 # Clone
-git clone https://github.com/Grepoch/magpie-cloudflare-workers-ai.git
+git clone https://github.com/Guislabert/magpie-cloudflare-workers-ai.git
 cd magpie-cloudflare-workers-ai
 
 # Test syntax
@@ -109,6 +109,15 @@ npm login
 npm publish --access public
 ```
 
+## Version / License
+
+| | |
+|---|---|
+| **Version** | `0.1.0` (see [CHANGELOG.md](CHANGELOG.md)) |
+| **License** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
+| **Runtime** | Node.js >= 20, ESM only |
+| **Author** | [@Guislabert](https://github.com/Guislabert) |
+
 ## License
 
-MIT © [Grepoch](https://github.com/Grepoch)
+MIT © [Guislabert](https://github.com/Guislabert)
