@@ -131,11 +131,11 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
   const fetchImpl = options.fetchImpl ?? fetch;
   const discoveryTTL = options.discoveryTTLMs ?? DEFAULT_DISCOVERY_TTL_MS;
 
-  if (!accountId) {
-    throw new Error("Cloudflare Workers AI requires accountId (your 32-char Account ID)");
-  }
-
-  const baseURL = interpolateTemplate(baseTemplate, { CLOUDFLARE_ACCOUNT_ID: accountId });
+  // accountId is optional at init: it is provided per account at sign-in time
+  // (metadata.accountId) or via plugin options. Do not fail the plugin load.
+  const baseURL = accountId
+    ? interpolateTemplate(baseTemplate, { CLOUDFLARE_ACCOUNT_ID: accountId })
+    : baseTemplate; // placeholder left intact until sign-in provides the id
   checkedURL(baseURL);
 
   // Initial static snapshot (from models.dev at plugin build time, or empty)
@@ -173,9 +173,7 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
         api: baseURL,
         models: Object.fromEntries(
           Object.entries(models).map(([id, m]) => [id, {
-            id: m.id,
             name: m.name,
-            provider: { npm: m.api.npm, api: m.api.url },
             limit: m.limit,
             reasoning: m.capabilities.reasoning,
             tool_call: m.capabilities.toolcall,
@@ -229,6 +227,9 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
         const apiKey = auth.key ?? auth.methods?.[0]?.key ?? "";
         const customAccountId = auth.metadata?.accountId || auth.methods?.[1]?.key || "";
         const effectiveAccountId = customAccountId || accountId;
+        if (!/^[0-9a-f]{32}$/i.test(effectiveAccountId)) {
+          throw new Error("Cloudflare Workers AI needs a 32-char hex Account ID — provide it in the sign-in prompt or the plugin's accountId option");
+        }
         const effectiveBaseURL = interpolateTemplate(baseTemplate, { CLOUDFLARE_ACCOUNT_ID: effectiveAccountId });
 
         return {

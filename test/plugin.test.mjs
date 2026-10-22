@@ -59,10 +59,18 @@ test("registers provider with interpolated account id in models.dev-driven confi
   });
 });
 
-test("missing accountId throws", async () => {
+test("init succeeds without accountId option (no load-time throw)", async () => {
+  const noOpts = await CloudflareWorkersAIPlugin({}, { fetchImpl: async () => new Response("{}") });
+  const cfg = {};
+  await noOpts.config(cfg);
+  assert.ok(cfg.provider["cloudflare-workers-ai"], "plugin loads without accountId option");
+});
+
+test("loader rejects accounts without a 32-hex accountId", async () => {
+  const plugin = await CloudflareWorkersAIPlugin({}, { fetchImpl: async () => new Response("{}") });
   await assert.rejects(
-    async () => CloudflareWorkersAIPlugin({}, { fetchImpl: async () => new Response("{}") }),
-    /accountId/
+    async () => plugin.auth.loader(async () => ({ key: "tok", metadata: [] })),
+    /Account ID/
   );
 });
 
