@@ -1,6 +1,6 @@
 # @magpie-community/opencode-cloudflare-workers-ai-auth
 
-简体中文 | [English](README.md)
+[English](README.md) | 简体中文 | [日本語](README.ja.md)
 
 [![CI](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/@magpie-community/opencode-cloudflare-workers-ai-auth.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
