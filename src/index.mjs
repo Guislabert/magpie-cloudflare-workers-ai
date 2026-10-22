@@ -198,6 +198,11 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
               output: Object.keys(m.capabilities.output).filter((k) => m.capabilities.output[k]),
             },
             cost: { input: m.cost.input, output: m.cost.output },
+            // magpie-only field: green "free" badge on the model card.
+            // Workers served the 8 paid-only models behind Workers Paid / AI
+            // Gateway credits; everything else counts only against the daily
+            // Neurons allowance.
+            free: !PAID_ONLY_MODELS.has(id),
             variants: m.variants,
             interleaved: m.capabilities.interleaved,
             }])
@@ -369,11 +374,14 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
       async models(provider, { auth } = {}) {
         if (!auth) return provider.models;
         const models = await discovery.forDisplay();
-        // Flag Models-limited behind Workers Paid / AI Gateway credits
+        // Flag the models Cloudflare serves only behind Workers Paid / AI
+        // Gateway credits, and mark the rest as free for the green badge.
         return Object.fromEntries(
           Object.entries(models).map(([id, m]) => [
             id,
-            PAID_ONLY_MODELS.has(id) ? { ...m, name: `${m.name} （Paid）` } : m,
+            PAID_ONLY_MODELS.has(id)
+              ? { ...m, name: `${m.name} （Paid）` }
+              : { ...m, free: true },
           ]),
         );
       },

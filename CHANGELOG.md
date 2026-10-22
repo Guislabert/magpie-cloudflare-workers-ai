@@ -17,3 +17,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.1.1] - unreleased
 
+
+
+
+- Per-model `free: true` (magpie-native field) on every model outside the paid-only list, so magpie's model picker shows the green free badge; the 8 paid-only models keep the `（Paid）` name flag. Verified in the 0.1.1326 sandbox: 20/28 models carry `free: true` once signed in.
