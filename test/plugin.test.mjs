@@ -114,13 +114,9 @@ test("auth loader forwards chat/completions with bearer token", async () => {
   assert.match(seen.url, /\/chat\/completions$/);
 });
 
-test("auth loader rejects non-chat endpoints and unknown models", async () => {
+test("auth loader rejects unknown models but passes other endpoints through", async () => {
   const plugin = await CloudflareWorkersAIPlugin({}, opts());
-  const result = await plugin.auth.loader(async () => ({ methods: [{ key: "tok" }, { key: "" }] }));
-  await assert.rejects(
-    async () => result.fetch(new Request(`${result.baseURL}/foo`, { method: "POST" }), {}),
-    /Unsupported endpoint/
-  );
+  const result = await plugin.auth.loader(async () => ({ key: "tok", metadata: { accountId: "" } }));
   await assert.rejects(
     async () =>
       result.fetch(
@@ -132,4 +128,36 @@ test("auth loader rejects non-chat endpoints and unknown models", async () => {
       ),
     /absent from the current catalog/
   );
+  // Non-chat paths are forwarded untouched to the same base URL
+  let forwarded = "";
+  const o2 = opts();
+  o2.fetchImpl = async (url) => {
+    if (typeof url === "string" && url.includes("models.dev")) {
+      return new Response(JSON.stringify(fakeCatalog()));
+    }
+    forwarded = url;
+    return new Response("{}", { status: 200 });
+  };
+  const p2 = await CloudflareWorkersAIPlugin({}, o2);
+  const r2 = await p2.auth.loader(async () => ({ key: "tok" }));
+  const resp2 = await r2.fetch(`${r2.baseURL}/embeddings`, {
+    method: "POST",
+    body: JSON.stringify({ text: "x" }),
+  });
+  assert.equal(resp2.status, 200);
+  assert.match(forwarded, /\/embeddings$/);
+});
+
+test("authorize returns contract-conform result with metadata accountId", async () => {
+  const plugin = await CloudflareWorkersAIPlugin({}, opts());
+  const method = plugin.auth.methods[0];
+  assert.equal(method.type, "api");
+  const ok = await method.authorize(" tok ", { accountId: "b".repeat(32) });
+  assert.equal(ok.type, "success");
+  assert.equal(ok.key, "tok");
+  assert.equal(ok.metadata.accountId, "b".repeat(32));
+  const bad = await method.authorize("  ", { accountId: "b".repeat(32) });
+  assert.equal(bad.type, "failed");
+  const badAcct = method.prompts[0].validate("xyz");
+  assert.match(badAcct, /32 位|32/);
 });

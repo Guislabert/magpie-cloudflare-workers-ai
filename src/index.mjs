@@ -159,12 +159,20 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
   return {
     async config(cfg) {
       cfg.provider ??= {};
+      let models;
+      try {
+        models = await discovery.forDisplay();
+      } catch (e) {
+        // Graceful degrade: load errors in the config hook fail the whole plugin.
+        console.warn("[magpie-cloudflare-workers-ai] catalog unavailable, registering provider with empty model list; models come from provider.models per account:", e.message);
+        models = {};
+      }
       cfg.provider[CF_WORKERS_AI_ID] ??= {
         name: "Cloudflare Workers AI",
         npm: CHAT_SDK,
         api: baseURL,
         models: Object.fromEntries(
-          Object.entries(await discovery.forDisplay()).map(([id, m]) => [id, {
+          Object.entries(models).map(([id, m]) => [id, {
             id: m.id,
             name: m.name,
             provider: { npm: m.api.npm, api: m.api.url },
@@ -179,7 +187,7 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
             cost: { input: m.cost.input, output: m.cost.output },
             variants: m.variants,
             interleaved: m.capabilities.interleaved,
-          }])
+            }])
         )
       };
     },
@@ -191,29 +199,35 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
           type: "api",
           label: "Cloudflare API Token (Workers AI:Edit 权限)",
           placeholder: "输入 API Token",
-          async authorize(input) {
-            if (!input || typeof input !== "string") return { type: "error", message: "需要 API Token" };
-            return { type: "success", key: input.trim() };
-          },
-        },
-        {
-          type: "input",
-          label: "Account ID (可选，默认使用插件配置的)",
-          placeholder: "32位十六进制 Account ID",
-          async authorize(input) {
-            if (input && !/^[0-9a-f]{32}$/i.test(input.trim())) {
-              return { type: "error", message: "Account ID 必须是 32 位十六进制" };
-            }
-            return { type: "success", key: input?.trim() ?? "" };
+          prompts: [
+            {
+              type: "password",
+              key: "accountId",
+              message: "Account ID (可选，默认使用插件配置的)",
+              placeholder: "32位十六进制 Account ID",
+              validate: (v) => (!v || /^[0-9a-f]{32}$/i.test(v.trim()) ? undefined : "Account ID 必须是 32 位十六进制"),
+            },
+          ],
+          async authorize(input, inputs) {
+            const token = typeof input === "string" ? input.trim() : "";
+            if (!token) return { type: "failed", error: "需要 API Token" };
+            const accountIdInput = (inputs?.accountId ?? "").trim();
+            return {
+              type: "success",
+              key: token,
+              metadata: accountIdInput ? { accountId: accountIdInput } : {},
+            };
           },
         },
       ],
-      async loader(getAuth) {
+      async loader(getAuth, provider) {
         const auth = await getAuth();
         if (!auth) return {};
 
-        const apiKey = auth.methods?.[0]?.key ?? "";
-        const customAccountId = auth.methods?.[1]?.key ?? "";
+        // Account object shapes: contract api account is { type: "api", key, ... };
+        // keep the legacy OpenCode multi-method shape accepted for compatibility.
+        const apiKey = auth.key ?? auth.methods?.[0]?.key ?? "";
+        const customAccountId = auth.metadata?.accountId || auth.methods?.[1]?.key || "";
         const effectiveAccountId = customAccountId || accountId;
         const effectiveBaseURL = interpolateTemplate(baseTemplate, { CLOUDFLARE_ACCOUNT_ID: effectiveAccountId });
 
@@ -222,34 +236,56 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
           apiKey,
           async fetch(input, init) {
             const req = new Request(input, init);
-            if (!req.url.endsWith("/chat/completions") || req.method !== "POST") {
-              throw new Error("Unsupported endpoint or method");
-            }
-            const body = await req.json();
-            if (!body || typeof body !== "object" || !body.model) {
-              throw new Error("Expected chat request with model");
-            }
-            // Verify model exists in current catalog
-            await discovery.requireModel(body.model);
+            const parsed = new URL(req.url);
+            const path = parsed.pathname.replace(/^\/+/, "");
+            const targetURL = `${effectiveBaseURL}/${path}`;
 
-            const headers = new Headers({ "content-type": "application/json", "authorization": `Bearer ${apiKey}` });
-            // Pass through CF-specific headers
+            const headers = new Headers({ authorization: `Bearer ${apiKey}` });
+            // Pass through CF-specific headers and content-type as given
+            const contentType = req.headers.get("content-type");
+            if (contentType) headers.set("content-type", contentType);
             for (const h of ["cf-aig-authorization", "cf-aig-metadata"]) {
               const v = req.headers.get(h);
               if (v) headers.set(h, v);
             }
 
-            return fetchImpl(`${effectiveBaseURL}/chat/completions`, {
-              method: "POST",
+            let body = init?.body;
+            if (req.method === "POST" && !body && req.body) {
+              body = await req.json().catch(() => null);
+              if (body) {
+                body = JSON.stringify(body);
+                if (!headers.get("content-type")) headers.set("content-type", "application/json");
+              }
+            }
+
+            // Verify the model exists in the current catalog when a chat request names one
+            if (body && typeof body === "string") {
+              let parsedBody = null;
+              try {
+                parsedBody = JSON.parse(body);
+              } catch {
+                /* non-JSON body: forward as-is */
+              }
+              if (parsedBody && typeof parsedBody === "object" && parsedBody.model) {
+                await discovery.requireModel(parsedBody.model);
+              }
+            }
+
+            return fetchImpl(targetURL, {
+              method: req.method,
               headers,
-              body: JSON.stringify(body),
-              signal: req.signal,
+              body,
+              signal: init?.signal ?? req.signal,
               redirect: "error",
             });
           },
         };
       },
-      async usage() { return { plan: "Cloudflare Workers AI", windows: [] }; },
+      async usage(_getAuth, _provider) {
+        // Contract: auth.usage(getAuth, provider). Cloudflare Workers AI has no
+        // per-token allowance endpoint to poll; report an empty usage window.
+        return { plan: "Cloudflare Workers AI", windows: [] };
+      },
     },
     provider: {
       id: CF_WORKERS_AI_ID,
