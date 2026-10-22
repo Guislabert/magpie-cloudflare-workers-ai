@@ -1,11 +1,11 @@
 {
-  "name": "magpie-cloudflare-workers-ai",
+  "name": "@magpie-community/opencode-cloudflare-workers-ai-auth",
   "version": "0.1.1",
   "private": false,
   "type": "module",
   "main": "./index.mjs",
   "description": "Cloudflare Workers AI provider plugin for Magpie with template URL and auto model discovery from models.dev",
-  "keywords": ["magpie", "cloudflare", "workers-ai", "provider", "template"],
+  "keywords": ["opencode", "opencode-plugin", "magpie", "cloudflare", "workers-ai", "provider", "template"],
   "license": "MIT",
   "repository": { "type": "git", "url": "https://github.com/Guislabert/magpie-cloudflare-workers-ai.git" },
   "homepage": "https://github.com/Guislabert/magpie-cloudflare-workers-ai#readme",

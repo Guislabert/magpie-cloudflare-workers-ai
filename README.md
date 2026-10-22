@@ -1,7 +1,7 @@
 # magpie-cloudflare-workers-ai
 
 [![CI](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/magpie-cloudflare-workers-ai.svg)](https://www.npmjs.com/package/magpie-cloudflare-workers-ai)
+[![npm version](https://img.shields.io/npm/v/@magpie-community/opencode-cloudflare-workers-ai-auth.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Cloudflare Workers AI provider plugin for [Magpie](https://github.com/magpie-ai/magpie).
@@ -38,12 +38,12 @@ Cloudflare Workers AI provider plugin for [Magpie](https://github.com/magpie-ai/
 ### Via npm (for local development)
 
 ```bash
-npm install magpie-cloudflare-workers-ai
+npm install @magpie-community/opencode-cloudflare-workers-ai-auth
 ```
 
 Then add to plugins.json:
 ```json
-{ "spec": "magpie-cloudflare-workers-ai" }
+{ "spec": "@magpie-community/opencode-cloudflare-workers-ai-auth" }
 ```
 
 ## Configuration
@@ -60,7 +60,7 @@ Environment variables / plugin options:
 In `plugins.json` with options:
 ```json
 {
-  "spec": "magpie-cloudflare-workers-ai",
+  "spec": "@magpie-community/opencode-cloudflare-workers-ai-auth",
   "options": {
     "accountId": "your-32-char-account-id",
     "discoveryTTLMs": 1800000
@@ -86,6 +86,11 @@ This plugin follows the magpie-community plugin contract ([reference](https://us
 - `usage(getAuth, provider)` reports an empty window (Workers AI has no per-token allowance endpoint to poll)
 - On catalog fetch failure at load, `config()` degrades to an empty model list instead of throwing; per-account `provider.models` serves the cached catalog afterward
 - One file, zero runtime dependencies, ESM (`node >= 20`)
+
+## Verified
+
+- **magpie 0.1.1326 sandbox**: plugin loads, 28 models discovered live from models.dev, sign-in flow works, `magpie provider test` returns model reply in 309 ms (`@cf/meta/llama-3.3-70b-instruct-fp8-fast`).
+- `magpie quota` renders the account row: best-effort plan detection + free Neurons/day window.
 
 ## Supported Models
 
