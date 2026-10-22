@@ -196,8 +196,14 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
         {
           type: "api",
           label: "Cloudflare API Token (Workers AI:Edit 权限)",
-          placeholder: "输入 API Token",
           prompts: [
+            {
+              type: "password",
+              key: "token",
+              message: "API Token",
+              placeholder: "Workers AI:Edit 权限的 API Token",
+              validate: (v) => (v && v.trim() ? undefined : "需要 API Token"),
+            },
             {
               type: "password",
               key: "accountId",
@@ -207,8 +213,8 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
             },
           ],
           async authorize(input, inputs) {
-            // magpie may pass the token as a bare string (first arg) or as a
-            // fields object ({ key?, token?, apiKey?, accountId? }); accept both.
+            // magpie passes the prompts answers object as the first argument
+            // ({ token?, accountId? }); accept legacy shapes as well.
             const obj =
               input && typeof input === "object" && !Array.isArray(input)
                 ? input
@@ -217,17 +223,17 @@ export async function CloudflareWorkersAIPlugin(_input, options = {}) {
                   : {};
             const token = (
               (typeof input === "string" && input.trim()) ||
-              obj.key || obj.token || obj.apiKey || obj["API Token"] || ""
+              obj.token || obj.key || obj.apiKey || ""
             ).trim();
             if (!token) return { type: "failed", error: "需要 API Token" };
-            const accountIdInput = (obj.accountId ?? inputs?.accountId ?? "").trim();
+            const accountIdInput = (obj.accountId ?? "").trim();
             return {
               type: "success",
               key: token,
               metadata: accountIdInput ? { accountId: accountIdInput } : {},
             };
           },
-        },
+        }
       ],
       async loader(getAuth, provider) {
         const auth = await getAuth();
