@@ -39,3 +39,13 @@ Security notes: no runtime dependencies; URLs validated (plain HTTP(S), no
 embedded credentials, `redirect: "error"`); signing exactly one header (`Bearer`)
 plus the two Cloudflare AI Gateway passthrough headers; sign-ins live only in
 magpie's own account storage.
+
+## 0.0.2 review fixes (same release train)
+
+- Request path never refreshes the catalog: model existence checks run against
+  the last good list only, and a models.dev outage can no longer take chat
+  requests down (upstream review finding, reproduced + regression test).
+- Plugin init no longer waits on models.dev.
+- GUI strings are English; Account ID prompt is `text`; `free` badge dropped by
+  design (shared daily Neurons allowance is not a free model); `usage()` returns
+  early without an Account ID.
