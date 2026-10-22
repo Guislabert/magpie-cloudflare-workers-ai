@@ -2,9 +2,15 @@
 // Release-train consistency check:
 //   package.json.version === CHANGELOG.md newest section === README badges
 // Exits 1 with a fix list on any mismatch.
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 
 const fail = [];
+// Inside a monorepo package (e.g. plugins/packages/<name>) the host repo has
+// no .github/scripts — skip the check in that layout.
+if (!existsSync(".github/scripts/version-check.mjs")) {
+  console.log("version-check: skipped (single-package layout)");
+  process.exit(0);
+}
 const read = (f) => {
   try {
     return readFileSync(f, "utf8");
@@ -27,7 +33,7 @@ else if (clVersion !== version) fail.push(`CHANGELOG newest section is [${clVers
 for (const f of ["README.md", "README.zh-CN.md", "README.ja.md"]) {
   const s = read(f);
   if (!s) continue;
-  const b = s.match(/badge\/(?:version|\u7248\u672c|\u30d0\u30fc\u30b8\u30e7\u30f3)-([0-9.]+)-/);
+  const b = s.match(/shields\.io\/badge\/(?:Version|\u7248\u672c|\u30d0\u30fc\u30b8\u30e7\u30f3)-([0-9.]+)-/);
   const got = b && (b[1] || b[2]);
   if (!got) fail.push(`${f}: no Version badge found`);
   else if (got !== version) fail.push(`${f}: Version badge is ${got}, package.json is ${version}`);
