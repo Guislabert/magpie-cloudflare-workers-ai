@@ -34,6 +34,16 @@ for (const f of ["README.md", "README.zh-CN.md", "README.ja.md"]) {
   if (!existsSync(f)) fail.push(`missing file: ${f}`);
 }
 
+// The bottom-of-README metadata tables (Version / 版本 / バージョン rows) carry
+// the release train too; a badge-only bump leaves them stale (the 0.0.3 miss).
+const tableRow = /^\|\s*\*\*(?:Version\*\*|版本\*\*|バージョン\*\*)\s*\|\s*([0-9a-zA-Z.-]+)\s*\|/m;
+for (const f of ["README.md", "README.zh-CN.md", "README.ja.md"]) {
+  const s = existsSync(f) ? read(f) : "";
+  const row = s.match(tableRow);
+  if (!row) fail.push(`${f} has no Version/版本/バージョン metadata-table row`);
+  else if (row[1] !== version) fail.push(`${f} metadata table says ${row[1]}, package.json is ${version}`);
+}
+
 // publish guards
 const pkgFiles = pkg.files ?? [];
 for (const f of ["README.md", "README.zh-CN.md", "README.ja.md", "LICENSE", "index.mjs"]) {
