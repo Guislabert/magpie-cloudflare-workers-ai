@@ -4,7 +4,7 @@ English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
 [![Version](https://img.shields.io/badge/Version-0.0.2-4285F4.svg)](CHANGELOG.md)
-[![npm version](https://img.shields.io/badge/npm%20version-0.0.2-EA4335.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
+[![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -32,9 +32,13 @@ AI Gateway credits (flagged below).
 ## Install in magpie
 
 ```sh
-magpie plugin add @magpie-community/opencode-cloudflare-workers-ai-auth   # from npm
+magpie plugin add github:Guislabert/magpie-cloudflare-workers-ai          # from git (this repo)
 magpie plugin add /path/to/folder                                        # local copy
 ```
+
+No npm account is needed anywhere in this flow. npm remains an optional
+channel run by the magpie-community org after a plugins-repo merge (trusted
+publishing); there is nothing to do on our side.
 
 Then sign in:
 
@@ -76,8 +80,10 @@ Models are named `cloudflare-workers-ai/@cf/<org>/<model>` — the same IDs
 `opencode.json`:
 
 ```json
-{ "plugin": ["@magpie-community/opencode-cloudflare-workers-ai-auth"] }
+{ "plugin": ["/path/to/this-repo"] }
 ```
+
+(clone the repo and point `plugin` at the local path — same package, no npm)
 
 then `opencode auth login` → Cloudflare Workers AI (same two fields).
 

@@ -4,7 +4,7 @@
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
 [![Version](https://img.shields.io/badge/Version-0.0.2-4285F4.svg)](CHANGELOG.md)
-[![npm version](https://img.shields.io/badge/npm%20version-0.0.2-EA4335.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
+[![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -31,9 +31,12 @@
 ## magpie へのインストール
 
 ```sh
-magpie plugin add @magpie-community/opencode-cloudflare-workers-ai-auth   # npm から
+magpie plugin add github:Guislabert/magpie-cloudflare-workers-ai          # git から（このリポジトリ）
 magpie plugin add /path/to/folder                                        # ローカルコピー
 ```
+
+この流れの中で npm アカウントは一切不要です。npm は公式リポジトリへのマージ後、
+magpie-community 組織が trusted publishing で代行する任意チャネルであり、こちら側では何もする必要がありません。
 
 サインイン：
 
@@ -72,8 +75,10 @@ magpie plugin logout cloudflare-workers-ai                           # サイン
 `opencode.json`：
 
 ```json
-{ "plugin": ["@magpie-community/opencode-cloudflare-workers-ai-auth"] }
+{ "plugin": ["/path/to/this-repo"] }
 ```
+
+（このリポジトリをクローンし、`plugin` にローカルパスを指定 — 同一パッケージ、npm 不要）
 
 その後 `opencode auth login` → Cloudflare Workers AI（同じ 2 項目）。
 

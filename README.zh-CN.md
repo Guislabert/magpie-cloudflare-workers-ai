@@ -4,7 +4,7 @@
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
 [![Version](https://img.shields.io/badge/Version-0.0.2-4285F4.svg)](CHANGELOG.md)
-[![npm version](https://img.shields.io/badge/npm%20version-0.0.2-EA4335.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
+[![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -30,9 +30,12 @@ Token 不需要选择任何 Zone。Free 与 Paid 两个计划均含 **每日 10,
 ## 在 magpie 中安装
 
 ```sh
-magpie plugin add @magpie-community/opencode-cloudflare-workers-ai-auth   # 从 npm
+magpie plugin add github:Guislabert/magpie-cloudflare-workers-ai          # 从 git（本仓库）
 magpie plugin add /path/to/folder                                        # 本地副本
 ```
+
+整个流程不需要任何 npm 账号。npm 仅作为合并进官方插件仓库后由
+magpie-community 官方（trusted publishing）代管的可选渠道，我们这边无需任何操作。
 
 然后登录：
 
@@ -71,8 +74,10 @@ magpie plugin logout cloudflare-workers-ai                                # 删�
 `opencode.json`：
 
 ```json
-{ "plugin": ["@magpie-community/opencode-cloudflare-workers-ai-auth"] }
+{ "plugin": ["/path/to/this-repo"] }
 ```
+
+（克隆本仓库后把 `plugin` 指到本地路径即可——同一个包，不走 npm）
 
 然后 `opencode auth login` → Cloudflare Workers AI（同样的两个字段）。
 

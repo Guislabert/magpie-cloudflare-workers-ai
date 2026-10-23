@@ -3,6 +3,38 @@
 All notable changes to this project are documented in this file.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Distribution & local notes (unversioned)
+
+Documented decisions and observations that do not change code or the 0.0.2
+version train.
+
+### Channels — npm is retired on our side (2026-10-23)
+
+- The plugin already reaches all magpie users via `magpie-community/plugins`
+  (PR #326 merged): magpie installs from the official repo's `dist` branch,
+  which community CI rebuilds automatically on every merge. Merging is all a
+  plugin needs to reach magpie.
+- npm publishing in that workflow is run by the magpie-community org itself
+  (trusted publishing / NPM_TOKEN) — no npm account is ever needed or
+  registered on our side.
+- This repo therefore publishes **git-first, npm-never**: the READMEs now list
+  `magpie plugin add github:Guislabert/magpie-cloudflare-workers-ai` and local
+  path installs as the documented channels. The npm badge was removed.
+
+### Known issue — Cloudflare API error observed locally
+
+- Intermittent `Cloudflare API error` surfaces in magpie while talking to
+  Workers AI. Exact request/response text was not archived, so this entry is
+  kept as an observation rather than a diagnosis.
+- Niceties already in the codebase that cover the likely causes: models.dev
+  outages no longer block requests (0.0.2), invalid Account IDs are rejected
+  before the call (0.0.2), template-account URLs are normalized onto the
+  signed-in account (0.0.1's `400 No route for that URI` fix).
+- Practical mitigations until the text is captured: retry the request;
+  re-check the token (`Account → Workers AI → Edit`) and the 32-hex Account ID;
+  `magpie provider test cloudflare-workers-ai` to reproduce outside a model
+  call. If the error text is captured later, file it here verbatim.
+
 ## [0.0.2] - merged community review train
 
 Synced back from `magpie-community/plugins` `packages/cloudflare-workers-ai`
