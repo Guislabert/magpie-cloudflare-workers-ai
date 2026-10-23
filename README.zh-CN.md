@@ -3,9 +3,10 @@
 [English](README.md) | 简体中文 | [日本語](README.ja.md)
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
-[![版本](https://img.shields.io/badge/版本-0.0.1--4285F4.svg)](CHANGELOG.md)
-[![npm version](https://img.shields.io/badge/npm%20version-0.0.1-EA4335.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
+[![版本](https://img.shields.io/badge/版本-0.0.2--4285F4.svg)](CHANGELOG.md)
+[![npm version](https://img.shields.io/badge/npm%20version-0.0.2-EA4335.svg)](https://www.npmjs.com/package/@magpie-community/opencode-cloudflare-workers-ai-auth)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
+
 
 面向 [OpenCode](https://opencode.ai) 1.x 和 [magpie](https://usemagpie.ai) 的供应商插件：
 用你的 API Token 登录 **Cloudflare Workers AI**，让它成为所有 Agent 都能选的供应商。
@@ -76,7 +77,7 @@ magpie plugin logout cloudflare-workers-ai                                # 删�
 
 ## 付费专属模型
 
-8 个模型被 Cloudflare 限制在 Workers Paid 或 AI Gateway 预充值之后，名字中标注 **（Paid）**：
+8 个模型被 Cloudflare 限制在 Workers Paid 或 AI Gateway 预充值之后，名字中标注 **(Paid)**：
 
 `@cf/moonshotai/kimi-k2.6`、
 `@cf/moonshotai/kimi-k2.7-code`、`@cf/zai-org/glm-5.2`、`@cf/zai-org/glm-5.3`、
@@ -97,8 +98,14 @@ magpie plugin options opencode-cloudflare-workers-ai-auth '{"accountId": "…", 
 |---|---|---|
 | `accountId` | — | 登录时留空所用的默认 Account ID |
 | `apiKey` | — | 默认 token（登录时的 key 优先） |
-| `baseTemplate` | `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/v1` | 插值模板 |
+| `baseTemplate` | 见下方 | 插值目标，Account ID 会注入其中 |
 | `discoveryTTLMs` | `3600000` | 目录刷新间隔 |
+
+**`baseTemplate` 默认值**（插值目标，Account ID 按账号注入）：
+
+```
+https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/v1
+```
 
 ## 排障
 
@@ -110,7 +117,7 @@ magpie plugin options opencode-cloudflare-workers-ai-auth '{"accountId": "…", 
 | `provider test` 返回 403 | token 与 Account ID 不匹配 |
 | 400 `No route for that URI` | 重新 `plugin add` 后仍出现，说明插件是旧版本——现版本代理已做 URL 归一化，可提 issue |
 | `Model … absent from the current catalog` | 模型 ID 不在 models.dev 的 cloudflare-workers-ai 分节里，请从列表中选择 |
-| （Paid）模型返回 400 | 你的计划是 Free，该模型需要 Workers Paid 或 AI Gateway 预充值 |
+| (Paid) 模型返回 400 | 你的计划是 Free，该模型需要 Workers Paid 或 AI Gateway 预充值 |
 | quota 行显示套餐兜底文案 | token 缺 `Account Settings → Read`；仅影响显示，Neurons 窗口照常展示 |
 
 ## 开发
@@ -141,7 +148,7 @@ sh scripts/sandbox.sh json       # 沙盒内 plugin --json
 
 | | |
 |---|---|
-| **版本** | [`0.0.1`](CHANGELOG.md) |
+| **版本** | 0.0.2 |
 | **许可证** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
 | **运行时** | Node.js >= 20，仅 ESM |
 | **作者** | [@Guislabert](https://github.com/Guislabert) |

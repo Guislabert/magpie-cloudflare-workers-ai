@@ -3,6 +3,36 @@
 All notable changes to this project are documented in this file.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.0.2] - merged community review train
+
+Synced back from `magpie-community/plugins` `packages/cloudflare-workers-ai`
+(the version actually merged as magpie-community/plugins#326). Contains the
+magpie-community review fixes beyond 0.0.1:
+
+### Fixed
+
+- A models.dev outage no longer breaks chat requests: the request path only
+  checks the last good catalog (`discovery.current`), never refreshes, and an
+  empty catalog simply skips the check.
+- Plugin load no longer waits on models.dev; discovery is lazy via
+  `forDisplay()`.
+- Paid-only models are name-flagged ` (Paid)` via a shared `paidName()` helper;
+  the shared 10,000 Neurons/day allowance is not a free badge, so
+  `free: true` stays off.
+- GUI strings shown to agents are now English throughout.
+- `usage()` validates the Account ID as 32 hex chars before calling the API;
+  an invalid ID returns the fallback plan instead of a guaranteed 400.
+- `registry.json` entry appended in the file's own format (+3/-1).
+- README polish: half-width ` (Paid)`, `baseTemplate` default moved out of the
+  Options table, npm badge tracks the release train.
+
+### Packaging
+
+- Version badge / table across all three READMEs: `0.0.2`.
+- dist branch artifacts: `magpie-community-opencode-cloudflare-workers-ai-auth-0.0.1.tgz`
+  and `…-0.0.2.tgz` (magpie users can `magpie plugin add` today; npm first
+  publish stays with the community org owner via trusted publishing).
+
 ## [0.0.1] - initial release
 
 The first public version, rebooted as an independent repository from an upstream
