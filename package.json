@@ -15,12 +15,6 @@
     "template"
   ],
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Guislabert/magpie-cloudflare-workers-ai.git"
-  },
-  "homepage": "https://github.com/Guislabert/magpie-cloudflare-workers-ai#readme",
-  "bugs": "https://github.com/Guislabert/magpie-cloudflare-workers-ai/issues",
   "files": [
     "index.mjs",
     "src/",

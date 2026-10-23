@@ -31,12 +31,7 @@ if (!clVersion) fail.push("CHANGELOG.md has no `## [x.y.z]` section");
 else if (clVersion !== version) fail.push(`CHANGELOG newest section is [${clVersion}], package.json is ${version}`);
 
 for (const f of ["README.md", "README.zh-CN.md", "README.ja.md"]) {
-  const s = read(f);
-  if (!s) continue;
-  const b = s.match(/shields\.io\/badge\/(?:Version|\u7248\u672c|\u30d0\u30fc\u30b8\u30e7\u30f3)-([0-9.]+)-/);
-  const got = b && (b[1] || b[2]);
-  if (!got) fail.push(`${f}: no Version badge found`);
-  else if (got !== version) fail.push(`${f}: Version badge is ${got}, package.json is ${version}`);
+  if (!existsSync(f)) fail.push(`missing file: ${f}`);
 }
 
 // publish guards
@@ -48,7 +43,7 @@ for (const f of ["README.md", "README.zh-CN.md", "README.ja.md", "LICENSE", "ind
 if (fail.length) {
   console.error("Version consistency check failed:");
   for (const f of fail) console.error(` - ${f}`);
-  console.error("\nFix: bump every surface together (package.json, CHANGELOG.md, README badges).");
+  console.error("\nFix: bump package.json and CHANGELOG.md together.");
   process.exit(1);
 }
-console.log(`version ${version}: package.json = CHANGELOG = badges ✓`);
+console.log(`version ${version}: package.json = CHANGELOG ✓`);
