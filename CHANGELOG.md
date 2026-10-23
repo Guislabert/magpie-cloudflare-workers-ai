@@ -35,6 +35,20 @@ version train.
   `magpie provider test cloudflare-workers-ai` to reproduce outside a model
   call. If the error text is captured later, file it here verbatim.
 
+## [0.0.3] - provider icon
+
+### Added
+
+- The provider shows Cloudflare's own cloud mark: `package.json`'s
+  `magpie.icon` points at the official `https://www.cloudflare.com/favicon.ico`
+  (96×96, on Cloudflare's own host). Indexed as a PNG by magpie's content
+  sniffing (`internal/provider/icon.go`), so the market's default picture is
+  gone without hosting a trademark anywhere else and without a registry
+  `icon` key (magpie has no built-in `cloudflare` icon;
+  `internal/provider/plugin_icon.go` prefers a plugin's own `magpie.icon`).
+
+No code paths change; `src/` and `test/` are byte-identical to 0.0.2.
+
 ## [0.0.2] - merged community review train
 
 Synced back from `magpie-community/plugins` `packages/cloudflare-workers-ai`

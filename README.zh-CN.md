@@ -3,7 +3,7 @@
 [English](README.md) | 简体中文 | [日本語](README.ja.md)
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
-[![Version](https://img.shields.io/badge/Version-0.0.2-4285F4.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.0.3-4285F4.svg)](CHANGELOG.md)
 [![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
