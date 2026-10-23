@@ -18,6 +18,8 @@
   "files": [
     "index.mjs",
     "src/",
+    "llms.txt",
+    "assets/icon.svg",
     "README.md",
     "README.zh-CN.md",
     "README.ja.md",
@@ -32,6 +34,6 @@
   },
   "magpie": {
     "maxConcurrency": 3,
-    "icon": "https://www.cloudflare.com/favicon.ico"
+    "icon": "https://raw.githubusercontent.com/Guislabert/magpie-cloudflare-workers-ai/main/assets/icon.svg"
   }
 }

@@ -17,6 +17,11 @@ and a daily Neurons allowance row in `magpie quota`.
 
 > Not affiliated with or endorsed by Cloudflare.
 
+> **For AI agents:** this repo ships an [`llms.txt`](llms.txt) with the full
+> agent-facing summary (install command, token permission shape, model naming,
+> paid-model gating). Reading the README? That paragraph is the machine-readable
+> version of everything below.
+
 ## What you need
 
 | Item | Where to find it |
@@ -162,7 +167,7 @@ magpie, agents and sign-ins are never touched.
 
 | | |
 |---|---|
-| **Version** | 0.0.2 |
+| **Version** | 0.0.3 |
 | **License** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
 | **Runtime** | Node.js >= 20, ESM only |
 | **Author** | [@Guislabert](https://github.com/Guislabert) |

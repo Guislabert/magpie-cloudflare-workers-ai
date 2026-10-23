@@ -154,7 +154,7 @@ sh scripts/sandbox.sh json       # サンドボックス内で plugin --json
 
 | | |
 |---|---|
-| **バージョン** | 0.0.2 |
+| **バージョン** | 0.0.3 |
 | **ライセンス** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
 | **ランタイム** | Node.js >= 20、ESM のみ |
 | **作者** | [@Guislabert](https://github.com/Guislabert) |

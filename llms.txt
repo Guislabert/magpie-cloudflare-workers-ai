@@ -1,0 +1,18 @@
+# @magpie-community/opencode-cloudflare-workers-ai-auth
+
+> Cloudflare Workers AI provider plugin for magpie (and OpenCode 1.x) — sign in
+> with your own Cloudflare API token and use `@cf/*` models as an agent provider.
+
+An agent setting up Cloudflare Workers AI inside magpie or OpenCode queries this
+for: plugin install (git-first, no npm needed), the token permission shape
+(**Account → Workers AI → Edit**, optional **Account Settings → Read** for plan
+info), model naming `cloudflare-workers-ai/@cf/<org>/<model>`, live model
+discovery from models.dev (28+ models, paid ones flagged), the daily
+**10,000 Neurons** free allowance, and which frontier models additionally need
+Workers Paid or prepaid AI Gateway credits.
+
+- Install: `magpie plugin add github:Guislabert/magpie-cloudflare-workers-ai`
+- Docs: https://github.com/Guislabert/magpie-cloudflare-workers-ai
+- License: MIT (Copyright 2026 Guislabert)
+- Not affiliated with or endorsed by Cloudflare; uses the public REST API
+  (`api.cloudflare.com/client/v4*/ai/*`) with the user's own API token.

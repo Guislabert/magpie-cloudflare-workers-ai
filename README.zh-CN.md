@@ -154,7 +154,7 @@ sh scripts/sandbox.sh json       # 沙盒内 plugin --json
 
 | | |
 |---|---|
-| **版本** | 0.0.2 |
+| **版本** | 0.0.3 |
 | **许可证** | [MIT](LICENSE) — Copyright (c) 2026 Guislabert |
 | **运行时** | Node.js >= 20，仅 ESM |
 | **作者** | [@Guislabert](https://github.com/Guislabert) |

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Neutral in-house mark for the cloudflare-workers-ai magpie plugin.
+       Deliberately NOT derived from Cloudflare's or magpie's brand assets
+       (no Cloudflare orange, no cloud glyph, no borrowed logo shape). -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E7C66"/>
+      <stop offset="1" stop-color="#126E8A"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#101820"/>
+  <!-- stylized API "bearer token" bar + arrow: token-based provider access -->
+  <rect x="14" y="22" width="28" height="7" rx="3.5" fill="url(#g)"/>
+  <circle cx="19" cy="25.5" r="3" fill="#101820"/>
+  <rect x="14" y="34" width="20" height="7" rx="3.5" fill="url(#g)" opacity=".7"/>
+  <circle cx="19" cy="37.5" r="3" fill="#101820"/>
+  <path d="M38 37.5h8l-3.5-4m3.5 4-3.5 4" stroke="#7FDBCA" stroke-width="2.6"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
