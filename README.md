@@ -198,7 +198,7 @@ MIT © [Guislabert](https://github.com/Guislabert)
 
 ---
 
-Layout: readme-harness v0.1.0 @`8c65495` · baseline: docs/readme-harness.md
+Layout: readme-harness [v0.1.0](https://github.com/Guislabert/readme-harness/blob/main/CHANGELOG.md) @[`8c65495`](https://github.com/Guislabert/readme-harness/commit/8c65495) · baseline: [docs/readme-harness.md](docs/readme-harness.md)
 
 [ci]: https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions
 [vlg]: CHANGELOG.md
