@@ -190,3 +190,5 @@ sh scripts/sandbox.sh json       # 沙盒内 plugin --json
 | **语言** | [English](README.md) · [日本語](README.ja.md) |
 
 MIT © [Guislabert](https://github.com/Guislabert)
+
+Layout: readme-harness v0.1.0 @`8c65495` · baseline: docs/readme-harness.md
