@@ -21,7 +21,7 @@
 
 <div align="center">
 
-> A provider plugin for OpenCode 1.x and magpie that signs in to Cloudflare Workers AI with your API token — 28+ models discovered live from models.dev, paid-only models flagged, and a daily Neurons allowance in `magpie quota`. English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+> A provider plugin for OpenCode 1.x and magpie that signs in to Cloudflare Workers AI with your API token — 28+ models discovered live from models.dev, paid-only models flagged, and a daily Neurons allowance in `magpie quota`.
 
 </div>
 
@@ -198,7 +198,7 @@ MIT © [Guislabert](https://github.com/Guislabert)
 
 ---
 
-_Layout: [readme-harness](https://github.com/Guislabert/readme-harness) v0.1.0 @`8c65495` · baseline: [docs/readme-harness.md](docs/readme-harness.md)_
+Layout: readme-harness v0.1.0 @`8c65495` · baseline: docs/readme-harness.md
 
 [ci]: https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions
 [vlg]: CHANGELOG.md
