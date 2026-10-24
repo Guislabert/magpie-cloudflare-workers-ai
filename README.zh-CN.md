@@ -1,20 +1,49 @@
-# @magpie-community/opencode-cloudflare-workers-ai-auth
+<div align="center">
 
-[English](README.md) | 简体中文 | [日本語](README.ja.md)
+<a href="https://github.com/Guislabert/magpie-cloudflare-workers-ai">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+    <img alt="@magpie-community/opencode-cloudflare-workers-ai-auth" src="assets/hero-light.svg" width="820">
+  </picture>
+</a>
+
+</div>
+
+<div align="center">
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
 [![Version](https://img.shields.io/badge/Version-0.0.3-4285F4.svg)](CHANGELOG.md)
 [![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
+</div>
 
+<h1 align="center">Cloudflare Workers AI · magpie 插件</h1>
 
-面向 [OpenCode](https://opencode.ai) 1.x 和 [magpie](https://usemagpie.ai) 的供应商插件：
-用你的 API Token 登录 **Cloudflare Workers AI**，让它成为所有 Agent 都能选的供应商。
-从 [models.dev](https://models.dev) 实时发现 28+ 个模型，付费专属模型自动标注，
-付费专属模型自动打标，`magpie quota` 显示每日 Neurons 额度窗口。
+<div align="center">
+
+> @magpie-community/opencode-cloudflare-workers-ai-auth
+
+</div>
+
+<div align="center">
+
+> 面向 [OpenCode](https://opencode.ai) 1.x 和 [magpie](https://usemagpie.ai) 的供应商插件：
+> 用你的 API Token 登录 **Cloudflare Workers AI**，让它成为所有 Agent 都能选的供应商。
+> 从 [models.dev](https://models.dev) 实时发现 28+ 个模型，付费专属模型自动标注，
+> 付费专属模型自动打标，`magpie quota` 显示每日 Neurons 额度窗口。
+
+</div>
 
 > 与 Cloudflare 无隶属或背书关系。
+
+<div align="center">
+
+[English](README.md) | 简体中文 | [日本語](README.ja.md)
+
+</div>
+
+---
 
 ## 前置要求
 

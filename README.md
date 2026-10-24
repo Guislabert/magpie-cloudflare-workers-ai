@@ -1,19 +1,40 @@
-# @magpie-community/opencode-cloudflare-workers-ai-auth
+<div align="center">
 
-English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+<a href="https://github.com/Guislabert/magpie-cloudflare-workers-ai">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+    <img alt="@magpie-community/opencode-cloudflare-workers-ai-auth" src="assets/hero-light.svg" width="820">
+  </picture>
+</a>
+
+</div>
+
+<div align="center">
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
 [![Version](https://img.shields.io/badge/Version-0.0.3-4285F4.svg)](CHANGELOG.md)
 [![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
+</div>
 
+<h1 align="center">Cloudflare Workers AI · magpie plugin</h1>
 
-A provider plugin for [OpenCode](https://opencode.ai) 1.x and
-[magpie](https://usemagpie.ai) that signs in to **Cloudflare Workers AI** with your
-API token and serves it as a provider every agent can use: 28+ models discovered
-live from [models.dev](https://models.dev), paid-only models flagged,
-and a daily Neurons allowance row in `magpie quota`.
+<div align="center">
+
+> @magpie-community/opencode-cloudflare-workers-ai-auth
+
+</div>
+
+<div align="center">
+
+> A provider plugin for [OpenCode](https://opencode.ai) 1.x and
+> [magpie](https://usemagpie.ai) that signs in to **Cloudflare Workers AI** with your
+> API token and serves it as a provider every agent can use: 28+ models discovered
+> live from [models.dev](https://models.dev), paid-only models flagged,
+> and a daily Neurons allowance row in `magpie quota`.
+
+</div>
 
 > Not affiliated with or endorsed by Cloudflare.
 
@@ -21,6 +42,14 @@ and a daily Neurons allowance row in `magpie quota`.
 > agent-facing summary (install command, token permission shape, model naming,
 > paid-model gating). Reading the README? That paragraph is the machine-readable
 > version of everything below.
+
+<div align="center">
+
+English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
+
+</div>
+
+---
 
 ## What you need
 

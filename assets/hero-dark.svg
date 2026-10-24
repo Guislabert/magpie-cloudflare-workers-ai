@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="magpie-cloudflare-workers-ai — Cloudflare Workers AI provider plugin for magpie / OpenCode">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#23170c"/>
+      <stop offset="0.5" stop-color="#101a33"/>
+      <stop offset="1" stop-color="#1c1338"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.15" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#f6821f" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#f6821f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cool" cx="0.95" cy="0.85" r="0.6">
+      <stop offset="0" stop-color="#60a5fa" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fb923c"/>
+      <stop offset="0.45" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0 L0 0 0 44" fill="none" stroke="#e4e8ef" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1640" height="440" fill="url(#bg)"/>
+  <rect width="1640" height="440" fill="url(#warm)"/>
+  <rect width="1640" height="440" fill="url(#cool)"/>
+  <rect width="1640" height="440" fill="url(#grid)"/>
+
+  <rect x="100" y="118" width="180" height="3" rx="1.5" fill="url(#accent)" opacity="0.95"/>
+
+  <text x="100" y="102" font-family="'Inter','SF Pro Text','Avenir Next',-apple-system,Segoe UI,sans-serif" font-size="18" font-weight="600" letter-spacing="2.8" fill="#94a3b8">MAGPIE&#160;&#8226;&#160;OPENCODE&#160;&#8226;&#160;CLOUDFLARE&#160;WORKERS&#160;AI&#160;PROVIDER&#160;&#8226;&#160;GIT-FIRST&#160;INSTALL</text>
+
+  <text x="100" y="232" font-family="'Iowan Old Style',Palatino,Georgia,'Times New Roman',serif" font-size="104" font-weight="700" fill="#f1f5f9" letter-spacing="-2">Cloudflare<tspan fill="url(#accent)">&#160;Workers&#160;AI</tspan></text>
+
+  <text x="100" y="300" font-family="'Iowan Old Style',Palatino,Georgia,'Times New Roman',serif" font-size="30" font-style="italic" fill="#94a3b8">One sign-in, any agent — magpie + OpenCode provider plugin.</text>
+  <text x="100" y="338" font-family="'Iowan Old Style',Palatino,Georgia,'Times New Roman',serif" font-size="30" font-style="italic" fill="#94a3b8">28+ models discovered live &#183; paid models flagged &#183; Neurons quota.</text>
+
+  <g transform="translate(1160 90)" font-family="'Inter','SF Pro Text','Avenir Next',sans-serif" font-size="15" font-weight="600">
+    <path d="M96 44 Q 190 26, 286 44" fill="none" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="3 4"/>
+    <path d="M96 128 Q 190 146, 286 128" fill="none" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="3 4"/>
+    <path d="M96 212 Q 190 194, 286 212" fill="none" stroke="#94a3b8" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="3 4"/>
+
+    <g>
+      <rect x="0" y="22" width="190" height="44" rx="22" fill="#1b2336" stroke="#fb923c" stroke-width="1.5"/>
+      <circle cx="23" cy="44" r="5" fill="#fb923c"/>
+      <text x="41" y="50" fill="#e2e8f0">magpie plugin add</text>
+    </g>
+    <g>
+      <rect x="200" y="22" width="190" height="44" rx="22" fill="#1b2336" stroke="#60a5fa" stroke-width="1.5"/>
+      <circle cx="223" cy="44" r="5" fill="#60a5fa"/>
+      <text x="241" y="50" fill="#e2e8f0">sign in once</text>
+    </g>
+    <g>
+      <rect x="0" y="106" width="190" height="44" rx="22" fill="#1b2336" stroke="#2dd4bf" stroke-width="1.5"/>
+      <circle cx="23" cy="128" r="5" fill="#2dd4bf"/>
+      <text x="41" y="134" fill="#e2e8f0">model discovery</text>
+    </g>
+    <g>
+      <rect x="200" y="106" width="190" height="44" rx="22" fill="#1b2336" stroke="#a78bfa" stroke-width="1.5"/>
+      <circle cx="223" cy="128" r="5" fill="#a78bfa"/>
+      <text x="241" y="134" fill="#e2e8f0">OpenCode / Codex</text>
+    </g>
+    <g>
+      <rect x="0" y="190" width="190" height="44" rx="22" fill="#1b2336" stroke="#fb923c" stroke-width="1.5"/>
+      <circle cx="23" cy="212" r="5" fill="#fb923c"/>
+      <text x="41" y="218" fill="#e2e8f0">Quota: Neurons/day</text>
+    </g>
+    <g>
+      <rect x="200" y="190" width="190" height="44" rx="22" fill="#1b2336" stroke="#60a5fa" stroke-width="1.5"/>
+      <circle cx="223" cy="212" r="5" fill="#60a5fa"/>
+      <text x="241" y="218" fill="#e2e8f0">paid models flagged</text>
+    </g>
+  </g>
+
+  <rect x="100" y="390" width="1440" height="1" fill="#e2e8f0" fill-opacity="0.12"/>
+  <text x="100" y="415" font-family="'Inter','SF Pro Text',sans-serif" font-size="14" fill="#94a3b8">zero runtime deps &#160;&#8226;&#160; ESM &#160;&#8226;&#160; Node &gt;=20 &#160;&#8226;&#160; 28+ models &#160;&#8226;&#160; magpie 0.1.1110+</text>
+</svg>

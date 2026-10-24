@@ -20,6 +20,8 @@
     "src/",
     "llms.txt",
     "assets/icon.svg",
+    "assets/hero-light.svg",
+    "assets/hero-dark.svg",
     "README.md",
     "README.zh-CN.md",
     "README.ja.md",

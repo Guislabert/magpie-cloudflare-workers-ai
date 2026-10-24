@@ -1,21 +1,50 @@
-# @magpie-community/opencode-cloudflare-workers-ai-auth
+<div align="center">
 
-[English](README.md) | [简体中文](README.zh-CN.md) | 日本語
+<a href="https://github.com/Guislabert/magpie-cloudflare-workers-ai">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+    <img alt="@magpie-community/opencode-cloudflare-workers-ai-auth" src="assets/hero-light.svg" width="820">
+  </picture>
+</a>
+
+</div>
+
+<div align="center">
 
 [![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
 [![Version](https://img.shields.io/badge/Version-0.0.3-4285F4.svg)](CHANGELOG.md)
 [![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
 
+</div>
 
+<h1 align="center">Cloudflare Workers AI · magpie プラグイン</h1>
 
-[OpenCode](https://opencode.ai) 1.x と [magpie](https://usemagpie.ai) 向けのプロバイダー
-プラグイン。API トークンで **Cloudflare Workers AI** にサインインし、どのエージェントでも
-使えるプロバイダーとして提供します。[models.dev](https://models.dev) から 28+ モデルを
-リアルタイム取得、有料専用モデルには目印、
-`magpie quota` には 1 日あたりの Neurons 余裕枠が表示されます。
+<div align="center">
+
+> @magpie-community/opencode-cloudflare-workers-ai-auth
+
+</div>
+
+<div align="center">
+
+> [OpenCode](https://opencode.ai) 1.x と [magpie](https://usemagpie.ai) 向けのプロバイダー
+> プラグイン。API トークンで **Cloudflare Workers AI** にサインインし、どのエージェントでも
+> 使えるプロバイダーとして提供します。[models.dev](https://models.dev) から 28+ モデルを
+> リアルタイム取得、有料専用モデルには目印、
+> `magpie quota` には 1 日あたりの Neurons 余裕枠が表示されます。
+
+</div>
 
 > Cloudflare とは提携・承認関係にありません。
+
+<div align="center">
+
+[English](README.md) | [简体中文](README.zh-CN.md) | 日本語
+
+</div>
+
+---
 
 ## 必要なもの
 
