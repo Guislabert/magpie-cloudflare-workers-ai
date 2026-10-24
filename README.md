@@ -179,6 +179,11 @@ magpie, agents and sign-ins are never touched.
   of throwing; the per-account `provider.models` serves the cached catalog after
 - One file, zero runtime dependencies, ESM, `node >= 20`
 
+## Acknowledgements
+
+- **Registry**: live model list comes from [models.dev](https://models.dev); built within the [magpie](https://usemagpie.ai) / OpenCode provider plugin ecosystem.
+- **Header/layout**: [readme-harness](https://github.com/Guislabert/readme-harness) v0.1.0 (@`8c65495`).
+
 ## Version / license
 
 | | |
@@ -193,7 +198,7 @@ MIT © [Guislabert](https://github.com/Guislabert)
 
 ---
 
-[Rendered via Readme Harness **v0.1.0** (commit `8c65495`, 2026-10-25); see docs/readme-harness.md for the layout baseline.](https://github.com/Guislabert/readme-harness)
+_Layout: [readme-harness](https://github.com/Guislabert/readme-harness) v0.1.0 @`8c65495` · baseline: [docs/readme-harness.md](docs/readme-harness.md)_
 
 [ci]: https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions
 [vlg]: CHANGELOG.md
