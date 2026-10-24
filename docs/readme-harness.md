@@ -5,7 +5,7 @@
 
 ## 当前基线
 
-## 哲学（architecture unified, content free）
+## 哲学（architecture unified, section & content free）
 
 本仓 README 遵循 readme-harness 的**架构统一 + section/内容自由**哲学（SPEC §1a）：
 头布局（hero→badges→居中H1→描述→NOTE→语言切换）统一；但 section 内容、
