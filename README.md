@@ -3,7 +3,7 @@
 <a href="https://github.com/Guislabert/magpie-cloudflare-workers-ai">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-    <img alt="@magpie-community/opencode-cloudflare-workers-ai-auth" src="assets/hero-light.svg" width="820">
+    <img alt="magpie-cloudflare-workers-ai hero" src="assets/hero-light.svg" width="820">
   </picture>
 </a>
 
@@ -11,37 +11,22 @@
 
 <div align="center">
 
-[![CI](https://img.shields.io/badge/CI-passing-34A853.svg)](https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions)
-[![Version](https://img.shields.io/badge/Version-0.0.3-4285F4.svg)](CHANGELOG.md)
-[![Install channel](https://img.shields.io/badge/Install%20channel-git%20%7C%20dist-4285F4.svg)](CHANGELOG.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://img.shields.io/badge/CI-passing-34A853.svg)][ci]
+[![Version](https://img.shields.io/badge/Version-0.0.3-4285F4.svg)][vlg]
+[![License: MIT](https://img.shields.io/badge/License-MIT-FBBC05.svg)][osi]
 
 </div>
 
-<h1 align="center">Cloudflare Workers AI · magpie plugin</h1>
+<h1 align="center">@magpie-community/opencode-cloudflare-workers-ai-auth</h1>
 
 <div align="center">
 
-> @magpie-community/opencode-cloudflare-workers-ai-auth
+> A provider plugin for OpenCode 1.x and magpie that signs in to Cloudflare Workers AI with your API token — 28+ models discovered live from models.dev, paid-only models flagged, and a daily Neurons allowance in `magpie quota`. English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
 
 </div>
 
-<div align="center">
-
-> A provider plugin for [OpenCode](https://opencode.ai) 1.x and
-> [magpie](https://usemagpie.ai) that signs in to **Cloudflare Workers AI** with your
-> API token and serves it as a provider every agent can use: 28+ models discovered
-> live from [models.dev](https://models.dev), paid-only models flagged,
-> and a daily Neurons allowance row in `magpie quota`.
-
-</div>
-
-> Not affiliated with or endorsed by Cloudflare.
-
-> **For AI agents:** this repo ships an [`llms.txt`](llms.txt) with the full
-> agent-facing summary (install command, token permission shape, model naming,
-> paid-model gating). Reading the README? That paragraph is the machine-readable
-> version of everything below.
+> [!NOTE]
+> **For AI agents:** this repo ships an [`llms.txt`](llms.txt) with the full agent-facing summary (install command, token permission shape, model naming, paid-model gating). The pipeline description below is the machine-readable README.
 
 <div align="center">
 
@@ -50,6 +35,8 @@ English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
 </div>
 
 ---
+
+> Not affiliated with or endorsed by Cloudflare.
 
 ## What you need
 
@@ -203,3 +190,11 @@ magpie, agents and sign-ins are never touched.
 | **中文** | [README.zh-CN.md](README.zh-CN.md) |
 
 MIT © [Guislabert](https://github.com/Guislabert)
+
+---
+
+[Rendered via Readme Harness **v0.1.0** (commit `8c65495`, 2026-10-25); see docs/readme-harness.md for the layout baseline.](https://github.com/Guislabert/readme-harness)
+
+[ci]: https://github.com/Guislabert/magpie-cloudflare-workers-ai/actions
+[vlg]: CHANGELOG.md
+[osi]: https://opensource.org/licenses/MIT
